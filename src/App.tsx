@@ -1,8 +1,28 @@
 import React, { useState } from "react";
 import "./App.css";
 
+export interface ToLocation {
+  LocationName: string;
+  Priority: number;
+  Order: number;
+}
+
+export interface TrainAnnouncement {
+  ActivityType: string;
+  AdvertisedTimeAtLocation: Date;
+  AdvertisedTrainIdent: string;
+  LocationSignature: string;
+  ToLocation: ToLocation[];
+  TimeAtLocation?: Date;
+  TimeAtLocationWithSeconds?: Date;
+}
+
+export interface INFO {
+  SSEURL: string;
+}
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [announcements, setAnnouncements] = useState<TrainAnnouncement[]>([]);
 
   return (
     <div className="App">
@@ -16,13 +36,28 @@ function App() {
                 "/.netlify/functions/node-fetch?trainId=7228&until=2021-09-11T23:59:59"
               )
                 .then((response) => response.json())
-                .then((response) => {
-                  setCount(response.TrainAnnouncement.length);
-                })
+                .then(
+                  (response: {
+                    TrainAnnouncement: TrainAnnouncement[];
+                    INFO: INFO;
+                  }) => {
+                    setAnnouncements(response.TrainAnnouncement);
+                  }
+                )
             }
           >
-            count is: {count}
+            fetch
           </button>
+          <table>
+            {announcements.map((announcement: TrainAnnouncement) => (
+              <tr>
+                <td>{announcement.ActivityType}</td>
+                <td>{announcement.LocationSignature}</td>
+                <td>{trim(announcement.AdvertisedTimeAtLocation)}</td>
+                <td>{trim(announcement.TimeAtLocationWithSeconds)}</td>
+              </tr>
+            ))}
+          </table>
         </p>
         <p>
           Edit <code>App.tsx</code> and save to test HMR updates.
@@ -49,6 +84,11 @@ function App() {
       </header>
     </div>
   );
+}
+
+function trim(time?: Date): string {
+  if (time) return time.toString().substring(8, 19);
+  return "...";
 }
 
 export default App;
