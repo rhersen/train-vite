@@ -1,4 +1,4 @@
-const locations: Record<string, string> = {
+const locations = {
   Abb: "Abborrträsk",
   Alä: "Almnäs",
   Alv: "Astrid Lindgrens värld",

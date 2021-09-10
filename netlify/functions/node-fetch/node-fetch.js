@@ -37,7 +37,7 @@ const handler = async function ({ queryStringParameters }) {
 
 module.exports = { handler };
 
-function getBody({ trainId, until }) {
+function getBody({ trainId, since, until }) {
   return `
     <REQUEST>
       <LOGIN authenticationkey='${process.env.TRAFIKVERKET_API_KEY}' />
@@ -45,6 +45,7 @@ function getBody({ trainId, until }) {
         <FILTER>
           <AND>
             <EQ name='AdvertisedTrainIdent' value='${trainId}'/>
+            <GT name='AdvertisedTimeAtLocation' value='${since}'/>
             <LT name='AdvertisedTimeAtLocation' value='${until}'/>
           </AND>
         </FILTER>
