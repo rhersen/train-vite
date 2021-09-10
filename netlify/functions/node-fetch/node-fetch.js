@@ -9,8 +9,8 @@ const handler = async function ({ queryStringParameters }) {
         body: getBody(queryStringParameters),
         headers: {
           "Content-Type": "application/xml",
-          Accept: "application/json"
-        }
+          Accept: "application/json",
+        },
       }
     );
     if (!response.ok) {
@@ -22,7 +22,7 @@ const handler = async function ({ queryStringParameters }) {
 
     return {
       statusCode: 200,
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     };
   } catch (error) {
     // output to netlify function log
@@ -37,14 +37,15 @@ const handler = async function ({ queryStringParameters }) {
 
 module.exports = { handler };
 
-function getBody({ trainId, until }) {
+function getBody({ trainId, since, until }) {
   return `
 <REQUEST>
   <LOGIN authenticationkey='${process.env.TRAFIKVERKET_API_KEY}' />
-    <QUERY sseurl='true' objecttype='TrainAnnouncement' orderby='TimeAtLocationWithSeconds' schemaversion='1.6'>
+    <QUERY sseurl='true' objecttype='TrainAnnouncement' orderby='AdvertisedTimeAtLocation' schemaversion='1.6'>
       <FILTER>
         <AND>
           <EQ name='AdvertisedTrainIdent' value='${trainId}'/>
+          <GT name='AdvertisedTimeAtLocation' value='${since}'/>
           <LT name='AdvertisedTimeAtLocation' value='${until}'/>
         </AND>
       </FILTER>
