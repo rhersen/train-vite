@@ -30,7 +30,7 @@ function App() {
         type="button"
         onClick={() =>
           fetch(
-            "/.netlify/functions/node-fetch?trainId=7228&since=2021-09-09T23:59:59&until=2021-09-11T23:59:59"
+            "/.netlify/functions/node-fetch?trainId=438&since=2021-09-09T23:59:59&until=2021-09-11T23:59:59"
           )
             .then((response) => response.json())
             .then(
@@ -46,14 +46,21 @@ function App() {
         fetch
       </button>
       <table>
-        {announcements.map((announcement: TrainAnnouncement) => (
-          <tr>
-            <td>{announcement.ActivityType}</td>
-            <td>{announcement.LocationSignature}</td>
-            <td>{trim(announcement.AdvertisedTimeAtLocation)}</td>
-            <td>{trim(announcement.TimeAtLocationWithSeconds)}</td>
-          </tr>
-        ))}
+        <tbody>
+          {announcements.map((announcement: TrainAnnouncement) => (
+            <tr
+              key={
+                announcement.ActivityType +
+                announcement.AdvertisedTimeAtLocation
+              }
+            >
+              <td>{announcement.ActivityType}</td>
+              <td>{announcement.LocationSignature}</td>
+              <td>{trim(announcement.AdvertisedTimeAtLocation)}</td>
+              <td>{trim(announcement.TimeAtLocationWithSeconds)}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );
