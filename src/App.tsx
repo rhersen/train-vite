@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [joke, setJoke] = useState("");
+  const [count, setCount] = useState(0)
 
   return (
     <div className="App">
@@ -12,14 +12,16 @@ function App() {
           <button
             type="button"
             onClick={() =>
-              fetch(`/.netlify/functions/node-fetch`)
+              fetch(
+                "/.netlify/functions/node-fetch?trainId=7228&until=2021-09-11T23:59:59"
+              )
                 .then((response) => response.json())
                 .then((response) => {
-                  setJoke(response.msg);
+                  setCount(response.TrainAnnouncement.length);
                 })
             }
           >
-            joke is: {joke}
+            count is: {count}
           </button>
         </p>
         <p>
