@@ -39,23 +39,23 @@ module.exports = { handler };
 
 function getBody({ trainId, since, until }) {
   return `
-<REQUEST>
-  <LOGIN authenticationkey='${process.env.TRAFIKVERKET_API_KEY}' />
-    <QUERY objecttype='TrainAnnouncement' orderby='AdvertisedTimeAtLocation' schemaversion='1.6'>
-      <FILTER>
-        <AND>
-          <EQ name='AdvertisedTrainIdent' value='${trainId}'/>
-          <GT name='AdvertisedTimeAtLocation' value='${since}'/>
-          <LT name='AdvertisedTimeAtLocation' value='${until}'/>
-        </AND>
-      </FILTER>
-      <INCLUDE>ActivityType</INCLUDE>
-      <INCLUDE>AdvertisedTrainIdent</INCLUDE>
-      <INCLUDE>AdvertisedTimeAtLocation</INCLUDE>
-      <INCLUDE>LocationSignature</INCLUDE>
-      <INCLUDE>TimeAtLocation</INCLUDE>
-      <INCLUDE>TimeAtLocationWithSeconds</INCLUDE>
-      <INCLUDE>ToLocation</INCLUDE>
-     </QUERY>
-</REQUEST>`;
+    <REQUEST>
+      <LOGIN authenticationkey='${process.env.TRAFIKVERKET_API_KEY}' />
+      <QUERY objecttype='TrainAnnouncement' orderby='AdvertisedTimeAtLocation' schemaversion='1.6'>
+        <FILTER>
+          <AND>
+            <EQ name='AdvertisedTrainIdent' value='${trainId}'/>
+            <GT name='AdvertisedTimeAtLocation' value='${since}'/>
+            <LT name='AdvertisedTimeAtLocation' value='${until}'/>
+          </AND>
+        </FILTER>
+        <INCLUDE>ActivityType</INCLUDE>
+        <INCLUDE>AdvertisedTrainIdent</INCLUDE>
+        <INCLUDE>AdvertisedTimeAtLocation</INCLUDE>
+        <INCLUDE>LocationSignature</INCLUDE>
+        <INCLUDE>TimeAtLocation</INCLUDE>
+        <INCLUDE>TimeAtLocationWithSeconds</INCLUDE>
+        <INCLUDE>ToLocation</INCLUDE>
+      </QUERY>
+    </REQUEST>`;
 }
