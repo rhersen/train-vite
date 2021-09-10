@@ -30,7 +30,7 @@ function App() {
         type="button"
         onClick={() =>
           fetch(
-            "/.netlify/functions/node-fetch?trainId=438&since=2021-09-09T23:59:59&until=2021-09-11T23:59:59"
+            "/.netlify/functions/node-fetch?trainId=7228&since=2021-09-09T23:59:59&until=2021-09-11T23:59:59"
           )
             .then((response) => response.json())
             .then(

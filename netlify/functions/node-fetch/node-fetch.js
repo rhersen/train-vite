@@ -41,7 +41,7 @@ function getBody({ trainId, since, until }) {
   return `
 <REQUEST>
   <LOGIN authenticationkey='${process.env.TRAFIKVERKET_API_KEY}' />
-    <QUERY sseurl='true' objecttype='TrainAnnouncement' orderby='AdvertisedTimeAtLocation' schemaversion='1.6'>
+    <QUERY objecttype='TrainAnnouncement' orderby='AdvertisedTimeAtLocation' schemaversion='1.6'>
       <FILTER>
         <AND>
           <EQ name='AdvertisedTrainIdent' value='${trainId}'/>
