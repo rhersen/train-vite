@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
+import locations from "./location";
 
 export interface ToLocation {
   LocationName: string;
@@ -30,7 +31,7 @@ function App() {
         type="button"
         onClick={() =>
           fetch(
-            "/.netlify/functions/node-fetch?trainId=438&since=2021-09-09T23:59:59&until=2021-09-11T23:59:59"
+            "/.netlify/functions/node-fetch?trainId=438&since=2021-09-09T23:59:59&until=2021-09-10T23:59:59"
           )
             .then((response) => response.json())
             .then(
@@ -55,7 +56,7 @@ function App() {
               }
             >
               <td>{announcement.ActivityType}</td>
-              <td>{announcement.LocationSignature}</td>
+              <td>{locations[announcement.LocationSignature]}</td>
               <td>{trim(announcement.AdvertisedTimeAtLocation)}</td>
               <td>{trim(announcement.TimeAtLocationWithSeconds)}</td>
             </tr>
@@ -67,7 +68,7 @@ function App() {
 }
 
 function trim(time?: Date): string {
-  if (time) return time.toString().substring(8, 19);
+  if (time) return time.toString().substring(11, 19);
   return "...";
 }
 
