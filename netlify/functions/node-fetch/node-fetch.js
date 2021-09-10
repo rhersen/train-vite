@@ -37,15 +37,14 @@ const handler = async function ({ queryStringParameters }) {
 
 module.exports = { handler };
 
-function getBody({ trainId, since, until }) {
+function getBody({ trainId, until }) {
   return `
     <REQUEST>
       <LOGIN authenticationkey='${process.env.TRAFIKVERKET_API_KEY}' />
-      <QUERY objecttype='TrainAnnouncement' orderby='AdvertisedTimeAtLocation' schemaversion='1.6'>
+      <QUERY objecttype='TrainAnnouncement' schemaversion='1.6'>
         <FILTER>
           <AND>
             <EQ name='AdvertisedTrainIdent' value='${trainId}'/>
-            <GT name='AdvertisedTimeAtLocation' value='${since}'/>
             <LT name='AdvertisedTimeAtLocation' value='${until}'/>
           </AND>
         </FILTER>

@@ -31,7 +31,7 @@ function App() {
         type="button"
         onClick={() =>
           fetch(
-            "/.netlify/functions/node-fetch?trainId=438&since=2021-09-09T23:59:59&until=2021-09-10T23:59:59"
+            "/.netlify/functions/node-fetch?trainId=438&until=2021-09-10T23:59:59"
           )
             .then((response) => response.json())
             .then(
@@ -52,7 +52,8 @@ function App() {
             <tr
               key={
                 announcement.ActivityType +
-                announcement.AdvertisedTimeAtLocation
+                announcement.AdvertisedTimeAtLocation +
+                announcement.TimeAtLocationWithSeconds
               }
             >
               <td>{announcement.ActivityType}</td>
@@ -68,7 +69,7 @@ function App() {
 }
 
 function trim(time?: Date): string {
-  if (time) return time.toString().substring(11, 19);
+  if (time) return time.toString().substring(0, 19);
   return "...";
 }
 
